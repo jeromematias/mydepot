@@ -16,7 +16,7 @@
                 @if($items->quantity>=1000)                    
                     <td id="{{ $items->quantity }}" class="text-center">{{ ($items->quantity /1000)." kg" }}</td>
                 @else                    
-                    <td id="{{ $items->quantity }}" class="text-center">{{ $items->quantity ." grams" }}</td>
+                    <td id="{{ $items->quantity }}" class="text-center">{{ $items->quantity ." g" }}</td>
                 @endif
             @else                
                 <td id="{{ $items->quantity }}" class="text-center">{{ $items->quantity ." pcs" }}</td>
