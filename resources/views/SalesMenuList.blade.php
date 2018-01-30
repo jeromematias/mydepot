@@ -24,10 +24,10 @@
 @else
 <div class="row" id="tilepanel">
   @foreach($menu as $i)
-  <div class="col-sm-3">
-    <div class="card">
+  <div class="col-sm-4">
+    <div class="card" id="menutiles">
       <div class="card-body">
-        <h4 class="card-title">{{ $i->name }}</h4>
+        <p class="card-title">{{ $i->name }}</p>
         <p class="card-text">Price : Php {{ $i->price }}</p>
         <button class="btn btn-primary col-sm-12" data-id="{{ $i->menu_id }}" id="btn-purchase" data-value="{{ $menu }}">Add</button>
       </div>

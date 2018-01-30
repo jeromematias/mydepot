@@ -13,6 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap4.min.css">
     <link href="css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="css/font-awesome.css" rel="stylesheet">
@@ -64,7 +65,7 @@
         </div>
     </nav>
 
-    <div class="container" id="main">
+    <div class="container-fluid" id="main">
         <div class="row" id="main-row">
             <div class="col-sm-12 card" id="main-card">
                 <div class="col-sm-12" id="Burger-Panel">
@@ -86,7 +87,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-7" id="MenuSection">@include('menu')</div>
+                            <div class="col-sm-7" id="MenuSection">
+                                <div class="table-responsive">
+                                    @include('menu')
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,6 +116,7 @@
     <!-- CHART JS -->
     <script type="text/javascript" src="js/echarts-all-3.js"></script>
     <script type="text/javascript" src="js/jquery.scannerdetection.js"></script>
+    <script type="text/javascript" src="js/jQuery.print.js"></script>
     <!-- Burger Depot Custom js -->
     <script type="text/javascript" src="js/BurgerDepot.js"></script>
     <script type="text/javascript" src="js/stocks.js"></script>

@@ -31,7 +31,7 @@
         <label for="Ingredients">Ingredients</label>
         <select id="Ingredients" name="Ingredients" class="form-control form-control-sm col-md-8"></select>
         <label for="NumberofIngredients">Quantity</label>
-        <input type="text" id="NumberofIngredients" class="form-control form-control-sm col-md-2 input-sm" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="NumberofIngredients">
+        <input type="text" id="NumberofIngredients" class="form-control form-control-sm col-md-2 input-sm" name="NumberofIngredients">
         <button class="btn btn-sm btn-secondary btn-ing" id="AddNewIng">Add new ingredient</button>
         <button class="btn btn-sm btn-secondary btn-ing" id="UpdateIng">Update ingredient</button>
         <button class="btn btn-sm btn-primary btn-ing" id="AddIng">Add ingredient</button>

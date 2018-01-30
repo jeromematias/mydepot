@@ -42,21 +42,25 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/burgerdepot/UpdateMenu','BurgerDepotController@UpdateMenu');
 	Route::get('/burgerdepot/GetTblItems','BurgerDepotController@GetTblItems');
 	Route::post('/burgerdepot/updateStocks','BurgerDepotController@updateStocks');
-	Route::get('/burgerdepot/stocklist','BurgerDepotController@stocklist');
-	Route::get('/Sales/getCategory','BurgerDepotController@getCategory');
-	Route::get('/Sales/SalesMenu','BurgerDepotController@SalesMenu');
-	Route::get('/Sales/GetMenuIngredients','BurgerDepotController@GetMenuIngredients');
-	Route::get('/Sales/checkStocks','BurgerDepotController@checkStocks');
-	Route::get('/Sales/test','BurgerDepotController@test');
-	Route::get('/Sales/pendinglist','BurgerDepotController@pendinglist');
-	Route::get('/Sales/addpendingitem','BurgerDepotController@addpendingitem');
-	Route::get('/Sales/PurchaseItems','BurgerDepotController@PurchaseItems');
+	Route::get('/burgerdepot/stocklist','BurgerDepotController@stocklist');	
 	Route::get('/Inventory/GetSales','BurgerDepotController@GetSales');
 	Route::get('Inventory/GetIngredientsInventory','BurgerDepotController@GetIngredientsInventory');
 	Route::get('burgerdepot/GetIngredientsInventory','BurgerDepotController@GetIngredientsInventory');
 	Route::get('burgerdepot/GetPurchaseLogs','BurgerDepotController@GetPurchaseLogs');
+	Route::get('/burgerdepot/Stockinout','BurgerDepotController@stockinout');
+	Route::get('/burgerdepot/SalesInventory','BurgerDepotController@SalesInventory');	
 
 });
+
+Route::get('/Sales/getCategory','BurgerDepotController@getCategory');
+Route::get('/Sales/SalesMenu','BurgerDepotController@SalesMenu');
+Route::get('/Sales/GetMenuIngredients','BurgerDepotController@GetMenuIngredients');
+Route::get('/Sales/checkStocks','BurgerDepotController@checkStocks');
+Route::get('/Sales/test','BurgerDepotController@test');
+Route::get('/Sales/pendinglist','BurgerDepotController@pendinglist');
+Route::get('/Sales/addpendingitem','BurgerDepotController@addpendingitem');
+Route::get('/Sales/PurchaseItems','BurgerDepotController@PurchaseItems');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

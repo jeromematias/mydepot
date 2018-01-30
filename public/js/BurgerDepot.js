@@ -14,11 +14,20 @@ $(document).ready(function() {
     })
     //NEW MENU
     init_btn_update();
-    ShowMenuIngredients();
-    $('#menuList').DataTable({
-        dom: 'ft'
-    })
+    ShowMenuIngredients();    
     
+    $('#Ingredients-qty, #stockQty, #NumberofIngredients').keypress(function(eve) {
+        if ((eve.which != 46 || $(this).val().indexOf('.') != -1) && (eve.which < 48 || eve.which > 57) || (eve.which == 46 && $(this).caret().start == 0) ) {
+        eve.preventDefault();
+        }
+        // this part is when left part of number is deleted and leaves a . in the leftmost position. For example, 33.25, then 33 is deleted
+        $('#Ingredients-qty, #stockQty, #NumberofIngredients').keyup(function(eve) {
+            if($(this).val().indexOf('.') == 0) {
+                $(this).val($(this).val().substring(1));
+            }
+        });
+    });
+
     $('#AddIng').click(function(){
         if($('#NumberofIngredients').val() != "" && $('#Ingredients').val() != ""){
             $('div#mainpanel').animate({scrollTop:$('#mainpanel').height()}, 500, 'swing');
@@ -37,7 +46,7 @@ $(document).ready(function() {
         $('#Category').val('')
         $('#menu_name').val('')
         $('#MenuPrice').val('')
-        $('#drink').val(1)
+        $('#drink').val(0)
         ingredientsList = []
         var table = $('#ingredientList').DataTable();
         table.clear().draw(); 
@@ -63,7 +72,7 @@ $(document).ready(function() {
     function GetMenuIngredients(id){
         updateID = id;
         $.ajax({
-            url : window.location.href + 'GetMenuIngredients',
+            url : window.location.href + '/GetMenuIngredients',
             type : 'GET',
             data : {
                 id : id
@@ -118,7 +127,7 @@ $(document).ready(function() {
                         $('#Category').val('')
                         $('#menu_name').val('')
                         $('#MenuPrice').val('')
-                        $('#drink').val('')
+                        $('#drink').val(0)
                         ingredientsList = []
                         var table = $('#ingredientList').DataTable();
                         table.clear().draw();
@@ -138,13 +147,6 @@ $(document).ready(function() {
             success: function(data) {
                 var output = data;
                 $('#MenuSection').html(output)
-                $('#menuList').DataTable({
-                    dom: 'ft',
-                    scrollY: ($('#mainpanel').height() - 150),
-                    scrollCollapse: true,
-                    responsive: true,
-                    fontSize : '11px'
-                });
                 init_btn_update();
             }
         })
@@ -152,7 +154,7 @@ $(document).ready(function() {
     $('#ingredientList').DataTable({
         dom: 't',
         responsive: true,
-        scrollY: '100px'
+        scrollY: '200px'
     });
     var ingr_action = "";
     cat_action = '',
@@ -173,11 +175,12 @@ $(document).ready(function() {
     $('#saveIngredients').click(function(e) {
         e.preventDefault();
         var ingname = $('#Ingredients-name').val(),
-            ingqty = $('#Ingredients-qty').val();
-        saveIngredients(ingname, ingqty, ingr_action, $('#Ingredients').val(), $(this));
+            ingqty = $('#Ingredients-qty').val(),
+            type = $('#stocktype').val();
+        saveIngredients(ingname, ingqty, ingr_action, $('#Ingredients').val(), $(this),type);
     })
     //Add new Ingredients   
-    function saveIngredients(ingname, ingqty, action, ingID, btnname) {
+    function saveIngredients(ingname, ingqty, action, ingID, btnname,type) {
         if (ingname != "" && ingqty != "") {
             btnname.prop('disabled', true);
             if (action == 'AddNewIng') {
@@ -185,6 +188,7 @@ $(document).ready(function() {
                 var data = {
                     'ingname': ingname,
                     'ingqty': ingqty,
+                    'type' : type,
                 }
             } else {
                 var url = window.location.href + '/UpdateIngredients';
@@ -192,6 +196,7 @@ $(document).ready(function() {
                     'ingID': ingID,
                     'ingname': ingname,
                     'ingqty': ingqty,
+                    'type' : type,
                 }
             }
             $.ajax({

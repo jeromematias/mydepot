@@ -103,10 +103,11 @@ $(document).ready(function(){
                $('#productlist').html(data)
                 purchase()
                 $('#menuList').DataTable({
-                    dom: 'ft',
+                    dom: 't',
                     scrollY: $('#productpanel .modal-body').height() - 100,
                     scrollCollapse: true,
-                    responsive: true
+                    responsive: true,
+                    paging : false,
                 })
             }
         })

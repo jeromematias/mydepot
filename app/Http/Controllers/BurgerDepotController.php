@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 class BurgerDepotController extends Controller
-{	
+{   
     public function GetPurchaseLogs(){
         $GetPurchaseLogs = DB::table('tbl_order_num')
             ->select(DB::raw('tbl_order_num.order_id, tbl_order_num.menu_id, tbl_menu.name, tbl_order_num.TotalPrice, tbl_order_num.CustomerCash, tbl_order_num.Change, tbl_order_num.purchasedate, tbl_order_num.quantity'))
@@ -53,6 +53,10 @@ class BurgerDepotController extends Controller
                 ->get();
             foreach ($GetMenuIngredients as $subitem) {
                 $qty = $item['quantity'] * $subitem->qty;
+                $itemqty = DB::table('tbl_stocks')
+                    ->select('quantity as qty')
+                    ->where('id', '=', $subitem->itemid)                     
+                    ->get();
                 $menuarray[] = array('menuid'=>$subitem->menuid,'itemid'=>$subitem->itemid,'quantity'=>$qty);
                 DB::table('tbl_stocks')
                     ->where('id',$subitem->itemid)
@@ -60,6 +64,15 @@ class BurgerDepotController extends Controller
                 DB::table('tbl_purchase_item')->insert(
                     ['menu_id' => $subitem->menuid, 'item_id' => $subitem->itemid,'quantity'=>$qty,'date_purchased'=>date("Y-m-d"),'order_id'=>$this->order_number()]
                 );
+
+                DB::table('tbl_stockinout')
+                ->insert([
+                    'item_id'=>$subitem->itemid,
+                    'quantity'=>$qty,
+                    'currentstock'=>$itemqty[0]->qty,
+                    'datedelivery'=>date("Y-m-d H:i:s"),
+                    'statusid' => 4,
+                ]);
             }
         DB::table('tbl_order_num')->insert(
         ['order_id'=>$this->order_number(),'menu_id'=>$menuid,'TotalPrice'=>$r->Price,'CustomerCash'=>$r->Cash,'Change'=>$r->Change,'purchasedate'=>date("Y-m-d H:i:s"),'quantity'=>$item['quantity']]
@@ -116,21 +129,61 @@ class BurgerDepotController extends Controller
     public function updateStocks(Request $r){
         if($r->action == 'increment'){
             foreach ($r->stocksArray as $stocks) {
+                
+                $itemqty = DB::table('tbl_stocks')
+                    ->select('quantity as qty')
+                    ->where('id', '=', $stocks['ingID'])                     
+                    ->get();
+                
+                $itemtype = DB::select('CALL itemtype('. $stocks['ingID'] .')');
+
+                if($itemtype[0]->stype == 2){
+                    $stocknum = $stocks['ingqty'] * 1000;
+                }else{
+                    $stocknum = $stocks['ingqty'];
+                }
                 DB::table('tbl_stocks')
                     ->where('id',$stocks['ingID'])
-                    ->increment('quantity',$stocks['ingqty']);
-                DB::table('tbl_stocks')
-                    ->where('id',$stocks['ingID'])
-                    ->update(['last_added' => $stocks['ingqty']]);
+                    ->increment('quantity',$stocknum);
+
+                DB::table('tbl_stockinout')
+                ->insert([
+                    'item_id'=>$stocks['ingID'],
+                    'quantity'=>$stocknum,
+                    'currentstock'=>$itemqty[0]->qty,
+                    'datedelivery'=>date("Y-m-d H:i:s"),
+                    'statusid' => $r->deliverystatus,
+                ]);
+
             }
         }else{
             foreach ($r->stocksArray as $stocks) {
+                $itemqty = DB::table('tbl_stocks')
+                    ->select('quantity as qty')
+                    ->where('id', '=', $stocks['ingID'])                     
+                    ->get();
+
+                $itemtype = DB::select('CALL itemtype('. $stocks['ingID'] .')');
+
+                if($itemtype[0]->stype == 2){
+                    $stocknum = $stocks['ingqty'] * 1000;
+                }else{
+                    $stocknum = $stocks['ingqty'];
+                }
+
                 DB::table('tbl_stocks')
                     ->where('id',$stocks['ingID'])
-                    ->decrement('quantity',$stocks['ingqty']);
-                DB::table('tbl_stocks')
-                    ->where('id',$stocks['ingID'])
-                    ->update(['last_deduct' => $stocks['ingqty']]);
+                    ->decrement('quantity',$stocknum);
+
+                DB::table('tbl_stockinout')
+                ->insert([
+                    'item_id'=>$stocks['ingID'],
+                    'quantity'=>$stocks['ingqty'],
+                    'currentstock'=>$itemqty[0]->qty,
+                    'datedelivery'=>date("Y-m-d H:i:s"),
+                    'statusid' => $r->deliverystatus,
+                ]);
+
             }
         }            
         return response(['msg'=>'success']);
@@ -181,9 +234,9 @@ class BurgerDepotController extends Controller
         return response(['msg'=>'Update Complete']);        
     }
     public function stocklist(){
-        $GetTblItems = DB::table('tbl_items')
-            ->join('tbl_stocks','tbl_items.id','=','tbl_stocks.id')
-            ->get();
+        
+        $GetTblItems = DB::select('CALL stocklist()');            
+        
         return view('stocklist',['GetTblItems'=>$GetTblItems]);
     }
     public function GetMenu(){
@@ -220,50 +273,50 @@ class BurgerDepotController extends Controller
         $count = DB::table('tbl_menu')->count();        
         return $count;
     }
-	#category
-	public function SaveCategory(Request $r){
-		if($r->ajax()){
-    		DB::table('tbl_category')->insert(['category_name'=>$r->category]);
-    		return response(['msg'=>'success']);
-    	}
-	}
-	public function updateCategory(Request $r){
-		if($r->ajax()){
-			DB::table('tbl_category')
-				->where('id',$r->id)
-				->update(['category_name'=>$r->category]);
-				return response(['msg'=>$r->id]);
-		}
-	}
-	public function getCategory(){
-		$GetCategory = DB::table('tbl_category')->get();
-    	return response(['category'=>$GetCategory]);
-	}
-	#Drinks
-	public function UpdateDrinks(Request $r){
-		if($r->ajax()){
-			DB::table('tbl_drinks')
-				->where('id',$r->id)
-				->update(['drinksname'=>$r->drinks]);
-				return response(['msg'=>$r->all()]);
-		}		
-	}
-	public function SaveDrinks(Request $r){
-    	if($r->ajax()){
-    		DB::table('tbl_drinks')->insert(['id'=>$this->CountDrinks(),'drinksname'=>$r->drinks]);
-    		return response(['msg'=>'success']);
-    	}
+    #category
+    public function SaveCategory(Request $r){
+        if($r->ajax()){
+            DB::table('tbl_category')->insert(['category_name'=>$r->category]);
+            return response(['msg'=>'success']);
+        }
+    }
+    public function updateCategory(Request $r){
+        if($r->ajax()){
+            DB::table('tbl_category')
+                ->where('id',$r->id)
+                ->update(['category_name'=>$r->category]);
+                return response(['msg'=>$r->id]);
+        }
+    }
+    public function getCategory(){
+        $GetCategory = DB::table('tbl_category')->get();
+        return response(['category'=>$GetCategory]);
+    }
+    #Drinks
+    public function UpdateDrinks(Request $r){
+        if($r->ajax()){
+            DB::table('tbl_drinks')
+                ->where('id',$r->id)
+                ->update(['drinksname'=>$r->drinks]);
+                return response(['msg'=>$r->all()]);
+        }       
+    }
+    public function SaveDrinks(Request $r){
+        if($r->ajax()){
+            DB::table('tbl_drinks')->insert(['id'=>$this->CountDrinks(),'drinksname'=>$r->drinks]);
+            return response(['msg'=>'success']);
+        }
     }
     private function CountDrinks(){
-    	$count = DB::table('tbl_drinks')->count();
-    	$CountDrinks = $count + 1;
-    	return $CountDrinks;
+        $count = DB::table('tbl_drinks')->count();
+        $CountDrinks = $count + 1;
+        return $CountDrinks;
     }
     public function drinks(){
-    	$GetDrinks = DB::table('tbl_drinks')->get();
-    	return response(['drinks'=>$GetDrinks]);
+        $GetDrinks = DB::table('tbl_drinks')->get();
+        return response(['drinks'=>$GetDrinks]);
     } 
-	#items
+    #items
     public function checkAvailableStocks(Request $r){
         $qty = DB::table('tbl_stocks')
                     ->select('quantity as qty')
@@ -272,37 +325,56 @@ class BurgerDepotController extends Controller
 
         return response(['quantity'=>$qty]);
     }
-    public function Addingredients(Request $r){    	
-    	if($r->ajax()){
-    		$id = $this->CountIngredients();    		
-    		DB::table('tbl_items')->insert(['item_name'=>$r->ingname]);    		
-    		$this->AddingredientsQty($id,$r->ingqty);
-    		return response(['msg'=>'success']);
-    	}
+    public function Addingredients(Request $r){     
+        if($r->ajax()){
+            $id = $this->CountIngredients();            
+            DB::table('tbl_items')->insert(['item_name'=>$r->ingname,'type'=>$r->type]);            
+            $this->AddingredientsQty($id,$r->ingqty,$r->type);
+            return response(['msg'=>'success']);
+        }
     }
     public function UpdateIngredients(Request $r){
         if($r->ajax()){
             DB::table('tbl_items')
                 ->where('id',$r->ingID)
-                ->update(['item_name'=>$r->ingname]);
+                ->update(['item_name'=>$r->ingname,'type'=>$r->type]);
 
+            if($r->type == 2){
+                $num = $r->ingqty * 1000;
+            }else{
+                $num = $r->ingqty;
+            }
             DB::table('tbl_stocks')
                 ->where('id',$r->ingID)
-                ->update(['quantity'=>$r->ingqty]);
+                ->update(['quantity'=>$num]);
 
             return response(['msg'=>'success']);
         }
     }
-    public function AddingredientsQty($id,$qty){
-    	DB::table('tbl_stocks')->insert(['id'=>$id,'quantity'=>$qty]);
+    public function AddingredientsQty($id,$qty,$type){
+        if($type == 2){
+            $num = $qty * 1000;
+        }else{
+            $num = $qty;
+        }        
+        DB::table('tbl_stocks')->insert(['id'=>$id,'quantity'=>$num]);
     }
     public function GetIngredients(){
-    	$GetIngredients = DB::table('tbl_items')->get();
-    	return response(['ingredients'=>$GetIngredients]);
+        $GetIngredients = DB::table('tbl_items')->get();
+        return response(['ingredients'=>$GetIngredients]);
     }
     private function CountIngredients(){
-    	$count = DB::table('tbl_items')->count();
-    	$ingCount = $count + 1;
-    	return $ingCount;
-    }       
+        $count = DB::table('tbl_items')->count();
+        $ingCount = $count + 1;
+        return $ingCount;
+    }
+    public function stockinout(){
+        $stockinout = DB::select('CALL stockinout');
+        return response($stockinout);      
+    }
+
+    public function SalesInventory(Request $r){
+        $SalesInventory = DB::select("CALL SalesInventory('%". $r->salesdate ."%')");
+        return response($SalesInventory);      
+    }
 }

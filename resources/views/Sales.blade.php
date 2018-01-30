@@ -24,7 +24,7 @@
 </head>
 
 <body class="bg-light">
-	<div class='progress' id="progress_div">
+    <div class='progress' id="progress_div">
       <div class='bar' id='bar1'></div>
       <div class='percent' id='percent1'></div>
     </div>
@@ -49,48 +49,48 @@
     <div class="container" id="main">
         <div class="row" id="main-row">
             <div class="col-sm-4">
-            	<div class="col-sm-12" id="pendingpanel">
-					<div class="modal-content">
-			            <div class="modal-header">
-			                <h5 class="modal-title">Purchased Items</h5>
-			            </div>
-			            <div class="modal-body" id="pendinglist">
-			            
-			            </div>
-			            <div class="modal-footer">
-			            	<label class="col-sm-6" id="Total-Price">Total Price : 0</label>
-			            	<label class="col-sm-6" id="Total-Change">Change : 0</label>
-			            </div>
-			            <div class="modal-footer">
-			                <div class="col-sm-12 btn-group">		                				                    
-			                    <input type="text" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="PaymentCash" class="col-sm-6 form-control form-control-sm" placeholder="">
-			                    <button type="button" class="col-sm-3 btn bg-gold" disabled data-id="add" id="BtnPurchase">PAYMENT</button>
-			                    <button type="button" class="col-sm-3 btn bg-gold" data-id="remove" id="CancelPending">CANCEL</button>		                  
-			                </div>                            
-			            </div>
-			        </div>
-	            </div>
+                <div class="col-sm-12" id="pendingpanel">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Purchased Items</h5>
+                        </div>
+                        <div class="modal-body" id="pendinglist">
+                        
+                        </div>
+                        <div class="modal-footer">
+                            <label class="col-sm-6" id="Total-Price">Total Price : 0</label>
+                            <label class="col-sm-6" id="Total-Change">Change : 0</label>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-sm-12 btn-group">                                                           
+                                <input type="text" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="PaymentCash" class="col-sm-6 form-control form-control-sm" placeholder="">
+                                <button type="button" class="col-sm-3 btn bg-gold" disabled data-id="add" id="BtnPurchase">PAYMENT</button>
+                                <button type="button" class="col-sm-3 btn bg-gold" data-id="remove" id="CancelPending">CANCEL</button>                        
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-8">
-            	<div class="col-sm-12" id="productpanel">
-            		<div class="modal-content">
-			            <div class="modal-header">
-			                <h5 class="modal-title">MENU</h5>
-			                <div class="btn-group" data-toggle="buttons">			                	        								                    
-			                    <button class="btn btn-primary" id="listtype" data-id="list">List</button>
-			                    <button class="btn" id="listtype" data-id="tile">tile</button>
-			                </div>
-			            </div>
-			            <div class="modal-body" id="productlist">
-			              
-			            </div>
-			            <div class="modal-footer">
-			                <div class="btn-group" data-toggle="buttons" id="Category">			                	        								                    
-			                    <button type="button" class="btn btn-primary" data-id="" data-id="add" id="showbycategory">Show all</button>
-			                </div>                            
-			            </div>
-			        </div>
-            	</div>
+                <div class="col-sm-12" id="productpanel">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">MENU</h5>
+                            <div class="btn-group" data-toggle="buttons">                                                                                           
+                                <button class="btn btn-primary" id="listtype" data-id="list">List</button>
+                                <button class="btn" id="listtype" data-id="tile">tile</button>
+                            </div>
+                        </div>
+                        <div class="modal-body" id="productlist">
+                          
+                        </div>
+                        <div class="modal-footer">
+                            <div class="btn-group" data-toggle="buttons" id="Category">                                                                                         
+                                <button type="button" class="btn btn-primary" data-id="" data-id="add" id="showbycategory">Show all</button>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
