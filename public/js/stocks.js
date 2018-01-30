@@ -173,21 +173,21 @@ $(document).ready(function(){
 					output += '<tr>'
 					output += '<td>'+data[i].item_name+'</td>'
 					if(data[i].stocktype == 'pecies'){
-						output += '<td>'+data[i].quantity + ' pcs</td>'
-						output += '<td>'+data[i].currentstock+' pcs</td>'
+						output += '<td class="text-right">'+data[i].quantity + ' pcs</td>'
+						output += '<td class="text-right">'+data[i].currentstock+' pcs</td>'
 					}else{
 						if(data[i].quantity >= 1000){
 							var qnum = Number(data[i].quantity / 1000)
-							output += '<td>'+qnum.toFixed(2) + ' kg</td>'
+							output += '<td class="text-right">'+qnum.toFixed(2) + ' kg</td>'
 						}else{
 							var qnum = Number(data[i].quantity)
-							output += '<td>'+qnum.toFixed(2) + ' g</td>'
+							output += '<td class="text-right">'+qnum.toFixed(2) + ' g</td>'
 						}
-						
+
 						if(data[i].currentstock>=1000){
-							output += '<td>'+ Number(data[i].currentstock / 1000).toFixed(2) +' kg</td>'
+							output += '<td class="text-right">'+ Number(data[i].currentstock / 1000).toFixed(2) +' kg</td>'
 						}else{
-							output += '<td>'+Number(data[i].currentstock).toFixed(2)+' g</td>'
+							output += '<td class="text-right">'+Number(data[i].currentstock).toFixed(2)+' g</td>'
 						}
 					}										
 					output += '<td>'+data[i].datedelivery+'</td>'
