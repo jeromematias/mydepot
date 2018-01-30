@@ -1,0 +1,152 @@
+html,body{
+	height: 100%;
+}
+body{
+	padding: 55px 0 0 0;
+	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}
+nav{
+	border:1px solid #ddd;
+}
+button{
+	cursor: pointer;
+}
+.container, .container-fluid{
+	padding: 15px 0 15px 0;
+	margin:  0 auto;
+	height: 100%;
+	
+}
+.container #main-row, .container-fluid #main-row{	
+	height: 100%;
+}
+.container #main-row #main-card, .container-fluid #main-row #main-card{
+	padding: 10px 10px 0 10px;	
+}
+.container #main-row #main-card, .container-fluid #main-row #main-card, #myTabContent, .tab-pane, #Burger-Panel, .card-body, #rowpanel, #mainpanel, #pendinglist, #productlist{
+	height: 100%;
+	overflow-y: auto;
+}
+#mainpanel::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#mainpanel::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#mainpanel::-webkit-scrollbar-thumb
+{
+	background-color: #EEE;
+}
+
+.bg-gold{
+	background-color: #FFC90E;
+}
+.navbar-nav .nav-link{
+	color: #fff
+}
+.dropdown-menu a:hover{
+	background-color: #FFC90E;
+}
+#Burger-Panel{
+	padding: 15px;
+}
+.btn-ing{
+	margin: 10px 5px;	
+	float: right;
+}
+#ingredientList{
+	font-size: 12px;
+	vertical-align: middle;
+}
+#ingredientList td{
+	padding-top: 0;
+	padding-bottom: 0;
+	vertical-align: middle;
+}
+.cancel_ing{
+	font-size: 10px;
+}
+#menuList{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 30px;
+}
+#menuList th, #menuList td{
+	cursor: pointer;
+}
+#menuList button{
+	font-size: 11px;
+}
+#ShowStocksModal{
+	cursor: pointer;
+}
+#modal-xl{
+	width: 800px;
+}
+#StockList tbody tr td{
+	cursor: pointer;
+}
+#StocksModal .btn-group label{
+	vertical-align: middle;
+}
+#Pendinglist{
+	margin: 15px 0 0 0;
+	font: 11px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 30px;
+}
+#pendingpanel, #productpanel{
+	height: 100%;
+	overflow-y: auto;
+}
+#pendingpanel, #productpanel{
+	padding: 0 0 0 0;
+}
+#pendingpanel .modal-content, #productpanel .modal-content{
+	height: 100%
+}
+#product-wrapper{
+	
+}
+#product-wrapper button{
+	height: 75px;
+	vertical-align: middle;
+}
+#tilepanel div{
+	margin: 0 0 5px 0;
+}
+#PaymentCash{
+	font-size: 30px;
+	font-weight: bolder;
+}
+.modal-backdrop{
+	background: rgba(8, 7, 7, 0.5);
+}
+.nmpd-grid {border: none; padding: 20px;}
+			.nmpd-grid>tbody>tr>td {border: none;}
+			
+			/* Some custom styling for Bootstrap */
+			.qtyInput {display: block;
+			  width: 100%;
+			  padding: 6px 12px;
+			  color: #555;
+			  background-color: white;
+			  border: 1px solid #ccc;
+			  border-radius: 4px;
+			  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+			  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+			  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+			  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+			  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+			}

@@ -1,0 +1,38 @@
+body{
+        /*font-family: 'Raleway', sans-serif;
+        font-weight: 200;*/
+}
+body, 
+.container, 
+.container .row, 
+.container .row .col-md-12,
+.container .row .col-md-12 .card,
+.container .row .col-md-12 .card .tab-pane,
+.container .row .col-md-12 .card .tab-pane .row,
+.container .row .col-md-12 .card .tab-pane .row #salesTable,
+.container .row .col-md-12 .card .tab-pane .row #DatePanel{
+    height: 100%;
+}
+.container .row .col-md-12 .card{
+    padding: 15px 15px 15px 15px;
+}
+.container .row .col-md-12 .card .tab-pane{
+    padding: 20px 0 0 0;
+}
+#DatePanel{
+    margin-top: 100px;
+}
+#showreport{
+    margin: 15px 0 0 0;
+}
+#Lbl_totalSales{
+    font-size: 30px;
+    margin: 10px 0 0 0;
+}
+.container .row .col-md-12 .card .tab-pane .row #tableIngredientsInventory{
+    margin: 0 auto;
+}
+table{
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+}
