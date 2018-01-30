@@ -11,7 +11,7 @@
     <tbody class="table-sm">
     @foreach ($GetTblItems as $items)
         <tr data-id="row{{ $items->id }}">
-            <td id="{{ $items->item_name }}">{{ $items->id . " " . $items->item_name }}</td>
+            <td id="{{ $items->item_name }}">{{ $items->item_name }}</td>
             @if($items->type=="kilograms")
                 @if($items->quantity>=1000)                    
                     <td id="{{ $items->quantity }}" class="text-center">{{ ($items->quantity /1000)." kg" }}</td>
