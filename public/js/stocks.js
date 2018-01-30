@@ -177,12 +177,13 @@ $(document).ready(function(){
 						output += '<td>'+data[i].currentstock+' pcs</td>'
 					}else{
 						if(data[i].quantity >= 1000){
-							var qnum = Number(data[i].quantity / 1000).toFixed(2)
-							output += '<td>'+qnum + ' kg</td>'
+							var qnum = Number(data[i].quantity / 1000)
+							output += '<td>'+qnum.toFixed(2) + ' kg</td>'
 						}else{
-							var qnum = Number(data[i].quantity).toFixed(2)
-							output += '<td>'+qnum + ' g</td>'
+							var qnum = Number(data[i].quantity)
+							output += '<td>'+qnum.toFixed(2) + ' g</td>'
 						}
+						
 						if(data[i].currentstock>=1000){
 							output += '<td>'+ Number(data[i].currentstock / 1000).toFixed(2) +' kg</td>'
 						}else{
