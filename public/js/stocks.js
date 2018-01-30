@@ -173,20 +173,20 @@ $(document).ready(function(){
 					output += '<tr>'
 					output += '<td>'+data[i].item_name+'</td>'
 					if(data[i].stocktype == 'pecies'){
-						output += '<td class="text-right">'+data[i].quantity + ' pcs</td>'
-						output += '<td class="text-right">'+data[i].currentstock+'</td>'
+						output += '<td>'+data[i].quantity + ' pcs</td>'
+						output += '<td>'+data[i].currentstock+' pcs</td>'
 					}else{
 						if(data[i].quantity >= 1000){
 							var qnum = Number(data[i].quantity / 1000)
-							output += '<td class="text-right">'+qnum + ' kg</td>'
+							output += '<td>'+qnum + ' kg</td>'
 						}else{
 							var qnum = Number(data[i].quantity)
-							output += '<td class="text-right">'+qnum + ' g</td>'
+							output += '<td>'+qnum + ' g</td>'
 						}
 						if(data[i].currentstock>=1000){
-							output += '<td class="text-right">'+ Number(data[i].currentstock / 1000) +' kg</td>'
+							output += '<td>'+ Number(data[i].currentstock / 1000) +' kg</td>'
 						}else{
-							output += '<td class="text-right">'+data[i].currentstock+' g</td>'
+							output += '<td>'+data[i].currentstock+' g</td>'
 						}
 					}										
 					output += '<td>'+data[i].datedelivery+'</td>'
