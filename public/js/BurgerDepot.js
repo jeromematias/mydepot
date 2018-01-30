@@ -133,6 +133,7 @@ $(document).ready(function() {
                         table.clear().draw();
                         console.log(data)
                         GetMenu();
+                        MenuAction = 'NewMenu'
                 }
             })
         } else {
