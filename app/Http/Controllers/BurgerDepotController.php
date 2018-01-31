@@ -137,7 +137,7 @@ class BurgerDepotController extends Controller
                 
                 $itemtype = DB::select('CALL itemtype('. $stocks['ingID'] .')');
 
-                if($itemtype[0]->stype == 2){
+                if($itemtype[0]->stype == 2 || $itemtype[0]->stype == 3){
                     $stocknum = $stocks['ingqty'] * 1000;
                 }else{
                     $stocknum = $stocks['ingqty'];
@@ -165,7 +165,7 @@ class BurgerDepotController extends Controller
 
                 $itemtype = DB::select('CALL itemtype('. $stocks['ingID'] .')');
 
-                if($itemtype[0]->stype == 2){
+                if($itemtype[0]->stype == 2  || $itemtype[0]->stype == 3){
                     $stocknum = $stocks['ingqty'] * 1000;
                 }else{
                     $stocknum = $stocks['ingqty'];
@@ -339,7 +339,7 @@ class BurgerDepotController extends Controller
                 ->where('id',$r->ingID)
                 ->update(['item_name'=>$r->ingname,'type'=>$r->type]);
 
-            if($r->type == 2){
+            if($r->type == 2 || $r->type == 3){
                 $num = $r->ingqty * 1000;
             }else{
                 $num = $r->ingqty;
@@ -352,7 +352,7 @@ class BurgerDepotController extends Controller
         }
     }
     public function AddingredientsQty($id,$qty,$type){
-        if($type == 2){
+        if($type == 2 || $type == 3){
             $num = $qty * 1000;
         }else{
             $num = $qty;

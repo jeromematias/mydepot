@@ -50,17 +50,21 @@
                 </li>-->
                 <li class="nav-item">
                     <a class="nav-link" id="ShowStocksModal">Stocks</a>
-                </li>
-                <!--
+                </li>                               
+            </ul>
+            <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown10">
-                        <a class="dropdown-item" href="#">Update item</a>
-                        <a class="dropdown-item" href="#">Delete item</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        {{ Auth::user()->email }}</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                            logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>                  
+                    </div>                  
                 </li>
-                -->
             </ul>
         </div>
     </nav>

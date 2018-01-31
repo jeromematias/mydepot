@@ -18,6 +18,12 @@
                 @else                    
                     <td id="{{ $items->quantity }}" class="text-center">{{ $items->quantity ." g" }}</td>
                 @endif
+            @elseif($items->type=="mililiter")
+                @if($items->quantity>=1000)                                        
+                    <td id="{{ $items->quantity }}" class="text-center">{{ number_format(($items->quantity /1000), 2, '.', ',') ." liter" }}</td>
+                @else                    
+                    <td id="{{ $items->quantity }}" class="text-center">{{ $items->quantity ." ml" }}</td>
+                @endif
             @else                
                 <td id="{{ $items->quantity }}" class="text-center">{{ $items->quantity ." pcs" }}</td>
             @endif            

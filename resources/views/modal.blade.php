@@ -86,7 +86,8 @@
                             <label for="stocktype">Type of Stock</label>
                             <select name="stocktype" id="stocktype" class="form-control form-control-sm">                    
                                 <option value="1">pecies</option>
-                                <option value="2">kilogram</option>                    
+                                <option value="2">kilogram</option>
+                                <option value="3">Mililiters</option>                    
                             </select>
                         </div>            
                     </div>
