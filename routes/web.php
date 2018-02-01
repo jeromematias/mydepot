@@ -60,6 +60,7 @@ Route::get('/Sales/test','BurgerDepotController@test');
 Route::get('/Sales/pendinglist','BurgerDepotController@pendinglist');
 Route::get('/Sales/addpendingitem','BurgerDepotController@addpendingitem');
 Route::get('/Sales/PurchaseItems','BurgerDepotController@PurchaseItems');
+Route::get('/Sales/PrintReciept','escposController@PrintReciept');
 
 Auth::routes();
 
