@@ -56,7 +56,7 @@ $(document).ready(function(){
                 Price : totalPrice
             },
             success : function(data){
-                console.log(data.menu)
+                console.log(data.ordersToPrint.original)
                 if(data.msg == 'success'){
                     var box = bootbox.alert('<h5><i class="fa fa-money" aria-hidden="true"></i> Customer Change is Php '+Number(CustomerChange).toFixed(2)+'</h5>')
                     centralizemodal(box)
@@ -66,7 +66,11 @@ $(document).ready(function(){
                     ResetVar()
                     TotalPrice(pendingArray)
                     var table = $('#tablepending').DataTable();
-                    table.clear().draw();                    
+                    table.clear().draw();
+                    console.log(data.ordersToPrint.original)
+                    $.post('http://localhost/escpos-php/example/interface/windows-usb.php',{ items : data.ordersToPrint.original },function(result){
+                        console.log(result)
+                    })                    
                 }
             }
         })    

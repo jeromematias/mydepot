@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Orders;
+use App\tbl_purchase_item;
+
 class BurgerDepotController extends Controller
 {   
-    public function GetPurchaseLogs(){
+
+    private $Orders = array();
+    
+    public function Orders(){
+        $this->Orders = Orders::all();
+        return response($this->Orders);
+    }
+    public function GetItemlog(){
         $GetPurchaseLogs = DB::table('tbl_order_num')
             ->select(DB::raw('tbl_order_num.order_id, tbl_order_num.menu_id, tbl_menu.name, tbl_order_num.TotalPrice, tbl_order_num.CustomerCash, tbl_order_num.Change, tbl_order_num.purchasedate, tbl_order_num.quantity'))
             ->join('tbl_menu', 'tbl_menu.menu_id', '=', 'tbl_order_num.menu_id')            
@@ -73,28 +83,47 @@ class BurgerDepotController extends Controller
                     'datedelivery'=>date("Y-m-d H:i:s"),
                     'statusid' => 4,
                 ]);
-            }
+            }                
+        }
+        $ornum = $this->order_number();
         DB::table('tbl_order_num')->insert(
-        ['order_id'=>$this->order_number(),'menu_id'=>$menuid,'TotalPrice'=>$r->Price,'CustomerCash'=>$r->Cash,'Change'=>$r->Change,'purchasedate'=>date("Y-m-d H:i:s"),'quantity'=>$item['quantity']]
-    );            
-        }                        
-        return response(['menu'=>$menuarray,'msg'=>'success']);
+        ['order_id'=>$ornum,'menu_id'=>$menuid,'TotalPrice'=>$r->Price,'CustomerCash'=>$r->Cash,'Change'=>$r->Change,'purchasedate'=>date("Y-m-d H:i:s"),'quantity'=>$item['quantity']]
+    );                                  
+        return response(['menu'=>$menuarray,'msg'=>'success','ordersToPrint'=>$this->printOrder($ornum)]);
     }
+    
+    #printreceipt   
+    
+    public function printOrder($menuid){        
+        $OrderReciept = DB::select("CALL OrderReciept(". $menuid .")");
+        return response($OrderReciept);      
+    }
+    
+    public function ShowOrder(Request $r){        
+        $ShowOrder = DB::select("CALL OrderReciept(". $r->menuid .")");
+        return response($ShowOrder);      
+    }
+
     public function order_number(){
         $count = DB::table('tbl_order_num')->count();        
         return $count + 1;
     }
+    
     #pendinglist
+    
     public function addpendingitem(Request $r){
         $pendingitem = DB::table('tbl_menu')
                         ->where('tbl_menu.menu_id','=',$r->id)
                         ->get();
         return response(['pendingitem'=>$pendingitem]);
     }
+    
     public function pendinglist(){
         return view('pendinglist');
     }
+    
     #Sales Menu   
+    
     public function checkStocks(Request $r){
         $menuarray = array();
         foreach ($r->menu as $item) {
@@ -125,7 +154,9 @@ class BurgerDepotController extends Controller
         
         return view('SalesMenuList',['menu'=>$SalesMenu,'list'=>$r->list]);
     }
+    
     #tbl_items
+    
     public function updateStocks(Request $r){
         if($r->action == 'increment'){
             foreach ($r->stocksArray as $stocks) {

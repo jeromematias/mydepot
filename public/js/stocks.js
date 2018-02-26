@@ -75,8 +75,12 @@ $(document).ready(function(){
 	  	SalesInventory($('#filterdate').val());
 	  	$('#stockbtns').fadeOut()
 	  	$('#stockdate').fadeIn()
-	  }else if(target == '#PLog'){
-	  	GetPurchaseLogs();
+	  }else if(target == '#ILog'){
+	  	GetItemlog();
+	  	$('#stockbtns').fadeOut()
+	  	$('#stockdate').fadeOut()
+	  }else if(target == '#Plog'){
+	  	GetPurchaselog();
 	  	$('#stockbtns').fadeOut()
 	  	$('#stockdate').fadeOut()
 	  }
@@ -281,34 +285,64 @@ $(document).ready(function(){
 			}
 		})
 	}
-	function GetPurchaseLogs(){
+	function GetPurchaselog(){
+		//alert("test")
+	}
+	function GetItemlog(){
 		$.ajax({
-			url : window.location.href + '/GetPurchaseLogs',
+			url : window.location.href + '/GetItemlog',
 			type : 'GET',
 			success : function(data){
 				var output = '<table class="table table-hover" id="tb-purchaselog" cellpadding="0" cellspacing="0">'
 					output += '<thead class="bg-gold">'
 					output += '<tr>'
-					output += '<th>Name</th>'
+					output += '<th>Order #</th>'
 					output += '<th>Date Purchased</th>'
 					output += '<th>Quantity</th>'
+					output += '<th></th>'
 					output += '</tr>'
 					output += '</thead>'
 					output += '<tbody class="table-sm">'
 				for(var i in data){					
 					output += '<tr>'
-					output += '<td>'+ data[i].name +'</td>'
+					output += '<td>'+ data[i].order_id +'</td>'
 					output += '<td>'+ data[i].purchasedate +'</td>'
 					output += '<td>'+ data[i].quantity +'</td>'
+					output += '<td><button id="itembyorder" data-value="'+ data[i].order_id +'" class="btn btn-sm">show</button></td>'
 					output += '</tr>'
 				}
 					output += '</tbody>'
 					output += '</table>'
-				$('#purchaselog').html(output)
+				$('#itemlog').html(output)
 				$('#tb-purchaselog').DataTable({
 					dom : 't',
-					scrollY: 400,
-                    scrollCollapse: true,                    			
+					scrollY: 300,
+          scrollCollapse: true,                    			
+          ordering : false,
+          paging : false,
+				})
+				$('#tb-purchaselog #itembyorder').each(function(){
+					$(this).click(function(){
+						var itemid = $(this).data('value')						
+						//printOrder
+						$.get(window.location.href + '/ShowOrder',{ menuid : itemid },function(result){		
+							var itemstoshow = '';
+							for(var i in result){
+								if(result[i].type == 'figure'){
+									itemstoshow += "Item : " + result[i].name + ", quantity : " + result[i].quantity + ", price : " + result[i].price + "<br/>"  
+								}else{
+									itemstoshow += "Total Price : " + result[i].quantity + ", Customer Cash " + result[i].name + ", Customer Change : " + result[i].price + "<br/>";
+									itemstoshow += "Date of Purchase : " + result[i].type;
+								}								
+							}					
+							bootbox.alert({
+							    message: itemstoshow,
+							    callback: function () {
+							        console.log(itemstoshow);
+							    }
+							})
+						})
+					})
 				})
 			}
 		})		

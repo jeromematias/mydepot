@@ -46,9 +46,11 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/Inventory/GetSales','BurgerDepotController@GetSales');
 	Route::get('Inventory/GetIngredientsInventory','BurgerDepotController@GetIngredientsInventory');
 	Route::get('burgerdepot/GetIngredientsInventory','BurgerDepotController@GetIngredientsInventory');
-	Route::get('burgerdepot/GetPurchaseLogs','BurgerDepotController@GetPurchaseLogs');
+	Route::get('burgerdepot/GetItemlog','BurgerDepotController@GetItemlog');
 	Route::get('/burgerdepot/Stockinout','BurgerDepotController@stockinout');
 	Route::get('/burgerdepot/SalesInventory','BurgerDepotController@SalesInventory');	
+	Route::get('/burgerdepot/Orders','BurgerDepotController@Orders');
+	Route::get('/burgerdepot/ShowOrder','BurgerDepotController@ShowOrder');
 
 });
 
@@ -61,7 +63,11 @@ Route::get('/Sales/pendinglist','BurgerDepotController@pendinglist');
 Route::get('/Sales/addpendingitem','BurgerDepotController@addpendingitem');
 Route::get('/Sales/PurchaseItems','BurgerDepotController@PurchaseItems');
 Route::get('/Sales/PrintReciept','escposController@PrintReciept');
+Route::get('/Sales/sendDataToPrinter','BurgerDepotController@sendDataToPrinter');
+Route::get('/Sales/triggerPrintOrder','BurgerDepotController@triggerPrintOrder');
+Route::get('/Sales/printOrder','BurgerDepotController@printOrder');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+

@@ -16,12 +16,12 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" data-toggle="tab" href="#SStocks" role="tab" aria-controls="SStocks">STOCK IN/OUT</a>
-                    </li>
+                    </li>                    
                     <li class="nav-item">
                       <a class="nav-link" data-toggle="tab" href="#SInventory" role="tab" aria-controls="SInventory">SALES INVENTORY</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#PLog" role="tab" aria-controls="PLog">PURCHASE LOG</a>
+                      <a class="nav-link" data-toggle="tab" href="#ILog" role="tab" aria-controls="ILog">PURCHASE LOG</a>
                     </li>
                   </ul>                  
                   <div class="tab-content">
@@ -30,12 +30,12 @@
                     </div>                
                     <div class="tab-pane active" id="SStocks" role="tabpanel">
                       <div id="stockinout" class="table-responsive"></div>
-                    </div>                
+                    </div>                                    
                     <div class="tab-pane" id="SInventory" role="tabpanel">
                       <div id="salesinventory" class="table-responsive"></div>
                     </div>                
-                    <div class="tab-pane" id="PLog" role="tabpanel">
-                      <div id="purchaselog" class="table-responsive"></div>
+                    <div class="tab-pane" id="ILog" role="tabpanel">
+                      <div id="itemlog" class="table-responsive"></div>
                     </div>
                   </div>
                 </div>  
